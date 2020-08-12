@@ -8,7 +8,6 @@ function main() {
                 return response.json();
             })
             .then(responseJson => {
-                const responseJson = JSON.parse(this.responseText);
                 if (responseJson.error) {
                     showResponseMessage(responseJson.message);
                 } else {
