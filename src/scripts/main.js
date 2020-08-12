@@ -19,31 +19,25 @@ function main() {
             })
     };
 
-
     const insertBook = (book) => {
-        // Create the instance of XMLHttpRequest
-        const xhr = new XMLHttpRequest();
-
-        // Set callback if response is success or error
-        xhr.onload = function () {
-            const responseJson = JSON.parse(this.responseText);
-            showResponseMessage(responseJson.message);
-            getBook();
-        }
-
-        xhr.onerror = function () {
-            showResponseMessage();
-        }
-
-        // Create POST request and set the target URL
-        xhr.open("POST", `${baseUrl}/add`);
-
-        // Set Content-Type and X-Auth-Token properties on Header request
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("X-Auth-Token", "12345");
-
-        // Send the request
-        xhr.send(JSON.stringify(book));
+        fetch(`${baseUrl}/add`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": "12345"
+            },
+            body: JSON.stringify(book)
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                showResponseMessage(responseJson.message);
+                getBook();
+            })
+            .catch(error => {
+                showResponseMessage(error);
+            })
     };
 
     const updateBook = (book) => {
