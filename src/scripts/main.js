@@ -1,5 +1,7 @@
 function main() {
 
+    const baseUrl = "https://web-server-book-dicoding.appspot.com";
+
     const getBook = () => {
         // Create the instance from XMLHttpRequest
         const xhr = new XMLHttpRequest();
@@ -19,7 +21,7 @@ function main() {
         }
 
         // Create GET request and set target URL
-        xhr.open("GET", "https://web-server-book-dicoding.appspot.com/list");
+        xhr.open("GET", `${baseUrl}/list`);
         // Send request
         xhr.send();
     };
@@ -41,7 +43,7 @@ function main() {
         }
 
         // Create POST request and set the target URL
-        xhr.open("POST", "https://web-server-book-dicoding.appspot.com/add");
+        xhr.open("POST", `${baseUrl}/add`);
 
         // Set Content-Type and X-Auth-Token properties on Header request
         xhr.setRequestHeader("Content-Type", "application/json");
