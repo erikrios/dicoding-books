@@ -54,7 +54,29 @@ function main() {
     };
 
     const updateBook = (book) => {
-        // tuliskan kode di sini!
+        // Create the instance of XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+
+        // Set the callback if response is success and error
+        xhr.onload = function () {
+            const responseJson = JSON.parse(this.responseText);
+            showResponseMessage(responseJson.message);
+            getBook();
+        }
+
+        xhr.onerror = function () {
+            showResponseMessage();
+        }
+
+        // Create PUT request and set the target URL
+        xhr.open("PUT", `${baseUrl}/edit/${book.id}`)
+
+        // Set Content-Type and X-Auth-Token properties on Header request
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("X-Auth-Token", "12345");
+
+        // Send the request
+        xhr.send(JSON.stringify(book));
     };
 
     const removeBook = (bookId) => {
