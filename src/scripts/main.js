@@ -1,7 +1,27 @@
 function main() {
 
     const getBook = () => {
-        // tuliskan kode di sini!
+        // Create instance from XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+
+        // Set callback if response is success or error
+        xhr.onload = function () {
+            const responseJson = JSON.parse(this.responseText);
+            if (responseJson.error) {
+                showResponseMessage(responseJson.message);
+            } else {
+                renderAllBooks(responseJson.books);
+            }
+        }
+
+        xhr.onerror = function() {
+            showResponseMessage();
+        }
+
+        // Create GET request and set target URL
+        xhr.open("GET", "https://web-server-book-dicoding.appspot.com/list");
+        // Send request
+        xhr.send();
     };
 
 
