@@ -1,7 +1,7 @@
 function main() {
 
     const getBook = () => {
-        // Create instance from XMLHttpRequest
+        // Create the instance from XMLHttpRequest
         const xhr = new XMLHttpRequest();
 
         // Set callback if response is success or error
@@ -14,7 +14,7 @@ function main() {
             }
         }
 
-        xhr.onerror = function() {
+        xhr.onerror = function () {
             showResponseMessage();
         }
 
@@ -26,7 +26,29 @@ function main() {
 
 
     const insertBook = (book) => {
-        // tuliskan kode di sini!
+        // Create the instance of XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+
+        // Set callback if response is success or error
+        xhr.onload = function () {
+            const responseJson = JSON.parse(this.responseText);
+            showResponseMessage(responseJson.message);
+            getBook();
+        }
+
+        xhr.onerror = function () {
+            showResponseMessage();
+        }
+
+        // Create POST request and set the target URL
+        xhr.open("POST", "https://web-server-book-dicoding.appspot.com/add");
+
+        // Set Content-Type and X-Auth-Token properties on Header request
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("X-Auth-Token", "12345");
+
+        // Send the request
+        xhr.send(JSON.stringify(book));
     };
 
     const updateBook = (book) => {
