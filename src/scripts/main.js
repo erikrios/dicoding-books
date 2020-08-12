@@ -3,27 +3,21 @@ function main() {
     const baseUrl = "https://web-server-book-dicoding.appspot.com";
 
     const getBook = () => {
-        // Create the instance from XMLHttpRequest
-        const xhr = new XMLHttpRequest();
-
-        // Set callback if response is success or error
-        xhr.onload = function () {
-            const responseJson = JSON.parse(this.responseText);
-            if (responseJson.error) {
-                showResponseMessage(responseJson.message);
-            } else {
-                renderAllBooks(responseJson.books);
-            }
-        }
-
-        xhr.onerror = function () {
-            showResponseMessage();
-        }
-
-        // Create GET request and set target URL
-        xhr.open("GET", `${baseUrl}/list`);
-        // Send request
-        xhr.send();
+        fetch(`${baseUrl}/list`)
+            .then(response => {
+                return response.json();
+            })
+            .then(responseJson => {
+                const responseJson = JSON.parse(this.responseText);
+                if (responseJson.error) {
+                    showResponseMessage(responseJson.message);
+                } else {
+                    renderAllBooks(responseJson.books);
+                }
+            })
+            .catch(error => {
+                showResponseMessage(error);
+            })
     };
 
 
